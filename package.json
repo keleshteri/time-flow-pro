@@ -1,0 +1,44 @@
+{
+  "name": "time-flow-pro",
+  "version": "1.0.0",
+  "description": "Professional time tracking and billing management for freelancers and consultants",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "concurrently \"npm run build:watch\" \"npm run serve\"",
+    "serve": "live-server --port=3000 --open=/dist --watch=dist",
+    "build": "npm run clean && npm run type-check && npm run compile && npm run copy-assets",
+    "build:watch": "npm run compile -- --watch",
+    "build:preview": "npm run build",
+    "build:staging": "npm run build",
+    "compile": "esbuild src/app.ts --bundle --outfile=dist/app.js --target=es2020 --minify --sourcemap",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.{ts,css,html}",
+    "clean": "node scripts/build.js",
+    "copy-assets": "echo Assets copied by clean script",
+    "mkdir": "node -e \"require('fs').mkdirSync('dist', {recursive: true})\"",
+    "test": "echo 'Tests using Vitest will be added in Epic development'",
+    "deploy:netlify": "npm run build && netlify deploy --prod --dir=dist",
+    "deploy:vercel": "npm run build && vercel --prod",
+    "deploy:cloudflare": "npm run build && wrangler pages deploy dist"
+  },
+  "keywords": ["time-tracking", "billing", "freelance", "consulting", "productivity"],
+  "author": "TimeFlow Pro Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
+    "live-server": "^1.2.2",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.0",
+    "cpy-cli": "^5.0.0",
+    "concurrently": "^8.2.0"
+  }
+}

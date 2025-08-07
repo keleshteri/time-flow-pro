@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TimeFlow Pro - Professional Time Tracking</title>
+  <meta name="description" content="Professional time tracking and billing management for freelancers and consultants">
+  
+  <!-- PWA Configuration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#3B82F6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="TimeFlow Pro">
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="styles/main.css" as="style">
+  <link rel="preload" href="app.js" as="script">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  
+  <!-- Performance and SEO -->
+  <meta name="robots" content="noindex, nofollow"> <!-- Remove for production -->
+  <link rel="canonical" href="https://timeflow.pro">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <h2>TimeFlow Pro</h2>
+        <p>Loading your workspace...</p>
+      </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav" style="display: none;">
+      <div class="nav-brand">
+        <h1>TimeFlow Pro</h1>
+        <div class="version-badge">v1.0</div>
+      </div>
+      <div class="nav-links">
+        <button class="nav-button active" data-view="dashboard" title="Dashboard">
+          📊 Dashboard
+        </button>
+        <button class="nav-button" data-view="projects" title="Projects">
+          📁 Projects
+        </button>
+        <button class="nav-button" data-view="billing" title="Billing">
+          💰 Billing
+        </button>
+        <button class="nav-button" data-view="reports" title="Reports">
+          📈 Reports
+        </button>
+      </div>
+      <div class="nav-controls">
+        <div class="sync-status">
+          <sync-indicator></sync-indicator>
+        </div>
+        <button class="settings-button" title="Settings">
+          ⚙️
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+      <!-- Dynamic content will be rendered here -->
+      <div class="content-loading">
+        <div class="content-spinner"></div>
+      </div>
+    </main>
+    
+    <!-- Global Notifications -->
+    <notification-container id="notifications"></notification-container>
+    
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner" style="display: none;">
+      🔌 You're offline. Data will sync when connection is restored.
+    </div>
+  </div>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  </script>
+  
+  <!-- Application Scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
