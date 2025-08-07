@@ -22,23 +22,29 @@
     "deploy:vercel": "npm run build && vercel --prod",
     "deploy:cloudflare": "npm run build && wrangler pages deploy dist"
   },
-  "keywords": ["time-tracking", "billing", "freelance", "consulting", "productivity"],
+  "keywords": [
+    "time-tracking",
+    "billing",
+    "freelance",
+    "consulting",
+    "productivity"
+  ],
   "author": "TimeFlow Pro Team",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
     "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.2.0",
+    "cpy-cli": "^5.0.0",
     "esbuild": "^0.19.0",
-    "live-server": "^1.2.2",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
     "eslint": "^8.50.0",
+    "live-server": "^1.2.2",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.0",
-    "cpy-cli": "^5.0.0",
-    "concurrently": "^8.2.0"
+    "typescript": "^5.0.0"
   }
 }
