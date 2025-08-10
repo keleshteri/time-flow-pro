@@ -1,0 +1,10 @@
+# Svelte stores directory
+# This directory will contain:
+# - timer.ts - Timer state management
+# - tasks.ts - Tasks state management
+# - projects.ts - Projects state management
+# - timeEntries.ts - Time entries state management
+# - billing.ts - Billing state management
+# - auth.ts - Authentication state management
+# - sync.ts - Sync state management
+# - settings.ts - App settings management

@@ -1,3 +1,168 @@
+/**
+ * TimeFlow Pro Global Styles
+ *
+ * This file contains:
+ * - TailwindCSS imports and plugins
+ * - Global base styles
+ * - Custom CSS variables for theming
+ * - Component-specific utilities
+ * - Print styles for reports
+ */
+
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+/* CSS Custom Properties for theming */
+:root {
+	/* Brand Colors */
+	--color-primary: 59 130 246; /* blue-500 */
+	--color-primary-dark: 29 78 216; /* blue-700 */
+	--color-success: 34 197 94; /* green-500 */
+	--color-warning: 245 158 11; /* amber-500 */
+	--color-danger: 239 68 68; /* red-500 */
+
+	/* Timer Colors */
+	--color-timer-running: var(--color-success);
+	--color-timer-paused: var(--color-warning);
+	--color-timer-stopped: 107 114 128; /* gray-500 */
+
+	/* Spacing */
+	--spacing-timer: 2rem;
+	--spacing-card: 1.5rem;
+
+	/* Shadows */
+	--shadow-timer: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+	--shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark mode color adjustments */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-timer-stopped: 156 163 175; /* gray-400 */
+	}
+}
+
+/* Base styles for better typography and accessibility */
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-feature-settings:
+		'kern' 1,
+		'liga' 1,
+		'calt' 1;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus styles for better accessibility */
+*:focus {
+	outline: 2px solid rgb(var(--color-primary));
+	outline-offset: 2px;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	@apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply rounded-full bg-gray-300 dark:bg-gray-600;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	@apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Timer-specific styles */
+.timer-display {
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.05em;
+}
+
+.timer-running {
+	color: rgb(var(--color-timer-running));
+}
+
+.timer-paused {
+	color: rgb(var(--color-timer-paused));
+}
+
+.timer-stopped {
+	color: rgb(var(--color-timer-stopped));
+}
+
+/* Animation utilities */
+@keyframes pulse-subtle {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.8;
+	}
+}
+
+.animate-pulse-subtle {
+	animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Print styles for reports */
+@media print {
+	@page {
+		margin: 1in;
+	}
+
+	body {
+		@apply bg-white text-black;
+	}
+
+	.no-print {
+		display: none !important;
+	}
+
+	.print-break-before {
+		page-break-before: always;
+	}
+
+	.print-break-after {
+		page-break-after: always;
+	}
+
+	.print-break-inside-avoid {
+		page-break-inside: avoid;
+	}
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	:root {
+		--color-primary: 0 0 0;
+		--color-primary-dark: 0 0 0;
+	}
+
+	.timer-running {
+		color: #000;
+		font-weight: bold;
+	}
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

@@ -1,0 +1,5 @@
+# Timer-specific components directory
+# This directory will contain:
+# - TimerWidget.svelte
+# - TimerControls.svelte
+# - TimerDisplay.svelte

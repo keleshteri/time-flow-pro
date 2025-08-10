@@ -1,0 +1,9 @@
+# Business logic services directory
+# This directory will contain:
+# - timer-service.ts - Core timer functionality
+# - time-entry-service.ts - Time entry management
+# - billing-service.ts - Billing calculations
+# - sync-service.ts - Data synchronization
+# - asana-service.ts - Asana API integration
+# - storage-service.ts - Data persistence
+# - encryption-service.ts - Client-side encryption

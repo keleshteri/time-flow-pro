@@ -1,0 +1,6 @@
+# Form components directory
+# This directory will contain:
+# - TimeEntryForm.svelte
+# - ProjectForm.svelte
+# - TaskForm.svelte
+# - BillingForm.svelte

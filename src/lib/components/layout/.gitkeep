@@ -1,0 +1,5 @@
+# Layout components directory
+# This directory will contain:
+# - Navigation.svelte
+# - Sidebar.svelte
+# - Header.svelte

@@ -1,0 +1,5 @@
+# Data visualization components directory
+# This directory will contain:
+# - TimeChart.svelte
+# - RevenueChart.svelte
+# - ProductivityChart.svelte

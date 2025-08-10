@@ -2,10 +2,89 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+		<!-- TimeFlow Pro Branding -->
+		<title>TimeFlow Pro - Professional Time Tracking & Billing</title>
+		<meta
+			name="description"
+			content="Professional time tracking and billing management system with Asana integration, offline support, and comprehensive reporting."
+		/>
+		<meta
+			name="keywords"
+			content="time tracking, billing, productivity, freelance, consulting, project management"
+		/>
+		<meta name="author" content="TimeFlow Pro" />
+
+		<!-- PWA Meta Tags -->
+		<meta name="theme-color" content="#3b82f6" />
+		<meta name="background-color" content="#ffffff" />
+		<meta name="display" content="standalone" />
+		<meta name="orientation" content="portrait-primary" />
+
+		<!-- Apple PWA Meta Tags -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="TimeFlow Pro" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+
+		<!-- Microsoft PWA Meta Tags -->
+		<meta name="msapplication-TileColor" content="#3b82f6" />
+		<meta name="msapplication-config" content="/browserconfig.xml" />
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="TimeFlow Pro - Professional Time Tracking" />
+		<meta
+			property="og:description"
+			content="Professional time tracking and billing management system"
+		/>
+		<meta property="og:url" content="https://timeflow-pro.app" />
+		<meta property="og:site_name" content="TimeFlow Pro" />
+
+		<!-- Twitter Card Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="TimeFlow Pro - Professional Time Tracking" />
+		<meta
+			name="twitter:description"
+			content="Professional time tracking and billing management system"
+		/>
+
+		<!-- Favicon and Icons -->
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Preconnect to external domains for performance -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<!-- Security Headers -->
+		<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+		<meta http-equiv="X-Frame-Options" content="DENY" />
+		<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+		<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="hover" class="bg-gray-50 dark:bg-gray-900">
 		<div style="display: contents">%sveltekit.body%</div>
+
+		<!-- Service Worker Registration -->
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker
+						.register('/sw.js')
+						.then((registration) => {
+							console.log('SW registered: ', registration);
+						})
+						.catch((registrationError) => {
+							console.log('SW registration failed: ', registrationError);
+						});
+				});
+			}
+		</script>
 	</body>
 </html>

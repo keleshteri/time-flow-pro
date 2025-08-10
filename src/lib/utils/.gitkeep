@@ -1,0 +1,7 @@
+# Shared utilities directory
+# This directory will contain:
+# - date-utils.ts - Date/time utilities
+# - validation-utils.ts - Input validation
+# - export-utils.ts - Data export functionality
+# - format-utils.ts - Data formatting
+# - constants.ts - App constants
