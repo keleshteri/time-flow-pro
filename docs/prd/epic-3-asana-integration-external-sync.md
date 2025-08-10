@@ -3,11 +3,13 @@
 **Epic Goal:** Bridge existing workflows by connecting to Asana for seamless task synchronization and implement reliable cloud storage for cross-device access. Users can automatically import their Asana tasks, maintain synchronization between platforms, and access their data from any device with robust conflict resolution.
 
 ## Story 3.1: Asana API Authentication & Connection
+
 As a freelancer who uses Asana,
 I want to securely connect my Asana account to TimeFlow Pro,
 so that I can integrate my existing project management workflow with time tracking.
 
 **Acceptance Criteria:**
+
 1. Settings page with Asana integration section
 2. Personal Access Token input field with secure storage (encrypted in localStorage)
 3. Connection test functionality with clear success/error feedback
@@ -18,11 +20,13 @@ so that I can integrate my existing project management workflow with time tracki
 8. Rate limiting awareness with user feedback (150 requests/minute limit)
 
 ## Story 3.2: Asana Task Import & Synchronization
+
 As a freelancer,
 I want to import my assigned Asana tasks into TimeFlow Pro,
 so that I can track time against tasks I'm already managing in Asana.
 
 **Acceptance Criteria:**
+
 1. One-click import of assigned tasks from selected Asana workspace
 2. Task import shows task name, project, due date, and completion status
 3. Duplicate prevention logic prevents importing same task multiple times
@@ -33,11 +37,13 @@ so that I can track time against tasks I'm already managing in Asana.
 8. Conflict resolution when local tasks have same names as Asana tasks
 
 ## Story 3.3: Bidirectional Task Status Synchronization
+
 As a freelancer,
 I want task completion status to sync between TimeFlow Pro and Asana,
 so that my project management and time tracking systems stay aligned.
 
 **Acceptance Criteria:**
+
 1. Task completion in TimeFlow Pro marks corresponding Asana task complete
 2. Asana task updates reflected in TimeFlow Pro during sync operations
 3. Manual sync button for immediate synchronization
@@ -48,11 +54,13 @@ so that my project management and time tracking systems stay aligned.
 8. Offline capability with sync queue for when connectivity returns
 
 ## Story 3.4: JSONBin.io Cloud Storage Integration
+
 As a freelancer,
 I want my TimeFlow Pro data automatically backed up to the cloud,
 so that I can access my time tracking from any device and never lose data.
 
 **Acceptance Criteria:**
+
 1. JSONBin.io account setup with API key configuration in settings
 2. Automatic sync every 5 minutes when data changes detected
 3. Manual sync/backup buttons for immediate cloud operations
@@ -63,11 +71,13 @@ so that I can access my time tracking from any device and never lose data.
 8. Bandwidth optimization - only sync changed data, not full dataset
 
 ## Story 3.5: Cross-Device Data Synchronization & Conflict Resolution
+
 As a freelancer using multiple devices,
 I want seamless data synchronization with intelligent conflict resolution,
 so that I can work from anywhere without data loss or duplication.
 
 **Acceptance Criteria:**
+
 1. Device fingerprinting to identify unique devices in sync logs
 2. Timestamp-based conflict resolution with user override options
 3. Merge capabilities for non-conflicting changes (different projects/time periods)

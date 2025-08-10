@@ -7,8 +7,9 @@
 TimeFlow Pro is built as a **modern SvelteKit application** using **TypeScript**, with an **offline-first PWA architecture**. The application leverages SvelteKit's static adapter for maximum deployment flexibility while maintaining professional-grade time tracking and billing management capabilities.
 
 **Key Technical Characteristics:**
+
 - **SvelteKit Static Site**: Pre-rendered for optimal performance
-- **Offline-First PWA**: Full functionality without internet connectivity  
+- **Offline-First PWA**: Full functionality without internet connectivity
 - **Modern Development Stack**: Svelte + TypeScript + Vite + TailwindCSS
 - **Comprehensive Testing**: Unit tests (Vitest) + Component tests + E2E tests (Playwright)
 - **Component-Driven Development**: Storybook for isolated component development
@@ -17,28 +18,33 @@ TimeFlow Pro is built as a **modern SvelteKit application** using **TypeScript**
 ### Tech Stack
 
 #### Core Framework
+
 - **SvelteKit** - Full-stack framework with static adapter
 - **TypeScript** - Type safety and developer experience
 - **Vite** - Fast build tool and development server
 
 #### Styling & UI
+
 - **TailwindCSS** - Utility-first CSS framework
   - `@tailwindcss/forms` - Enhanced form styling
   - `@tailwindcss/typography` - Beautiful text formatting
 - **CSS3 Custom Properties** - Design system variables
 
 #### Development Tools
+
 - **Storybook** - Component development and documentation
 - **ESLint** - Code linting and quality
 - **Prettier** - Code formatting
 - **Svelte Check** - TypeScript checking for Svelte components
 
 #### Testing
+
 - **Vitest** - Unit and component testing
 - **Playwright** - End-to-end testing
 - **Testing Library** - Component testing utilities
 
 #### Build & Deployment
+
 - **@sveltejs/adapter-static** - Static site generation
 - **Service Worker** - PWA capabilities and offline support
 - **Multi-platform deployment**: Netlify, Vercel, Cloudflare Pages
@@ -133,44 +139,48 @@ time-flow-pro/
 ### Key Architectural Changes
 
 #### 1. From Vanilla TS to SvelteKit
+
 ```javascript
 // OLD: Manual DOM manipulation
 document.getElementById('timer').innerHTML = formatTime(elapsed);
 
 // NEW: Reactive Svelte components
-<Timer bind:elapsed onStart={handleStart} onStop={handleStop} />
+<Timer bind:elapsed onStart={handleStart} onStop={handleStop} />;
 ```
 
 #### 2. State Management with Svelte Stores
+
 ```javascript
 // stores/timer.ts
 import { writable } from 'svelte/store';
 
 export const timerState = writable({
-  isRunning: false,
-  elapsed: 0,
-  currentTask: null
+	isRunning: false,
+	elapsed: 0,
+	currentTask: null
 });
 
 // Components automatically update when store changes
 ```
 
 #### 3. Component-Driven Architecture
+
 ```javascript
 // Each UI piece is an isolated, testable component
 src/lib/components/
 ├── ui/Button.svelte           # ← Storybook story
-├── timer/TimerWidget.svelte   # ← Component tests  
+├── timer/TimerWidget.svelte   # ← Component tests
 └── forms/TimeEntryForm.svelte # ← E2E tests
 ```
 
 #### 4. Modern Development Workflow
+
 ```bash
 # Development
 npm run dev          # Vite dev server + HMR
 npm run storybook    # Component development
 
-# Quality Assurance  
+# Quality Assurance
 npm run test         # Vitest unit tests
 npm run test:e2e     # Playwright E2E tests
 npm run lint         # ESLint + Svelte linting
@@ -182,36 +192,42 @@ npm run build        # Static site generation
 ### Migration Benefits
 
 #### Developer Experience
+
 ✅ **Hot Module Replacement** - Instant updates during development  
 ✅ **Type Safety** - Full TypeScript support for Svelte components  
 ✅ **Component Isolation** - Develop/test components independently  
-✅ **Modern Tooling** - Vite, Vitest, Playwright, Storybook  
+✅ **Modern Tooling** - Vite, Vitest, Playwright, Storybook
 
 #### Performance
+
 ✅ **Smaller Bundle Size** - Svelte compiles away, no runtime overhead  
 ✅ **Faster Loading** - Static pre-rendering + code splitting  
 ✅ **Better SEO** - Server-side rendering capabilities  
-✅ **Optimized Builds** - Vite's advanced bundling  
+✅ **Optimized Builds** - Vite's advanced bundling
 
-#### Maintainability  
+#### Maintainability
+
 ✅ **Component Reusability** - Consistent UI components across app  
 ✅ **Reactive State** - Automatic UI updates when data changes  
 ✅ **Better Testing** - Component-level testing with Testing Library  
-✅ **Documentation** - Living component docs with Storybook  
+✅ **Documentation** - Living component docs with Storybook
 
 ### Preserved Architecture Elements
 
 #### Business Logic (Unchanged)
+
 - `TimerService` - Core timer functionality preserved
-- `TimeEntryService` - Data management logic preserved  
+- `TimeEntryService` - Data management logic preserved
 - `SyncService` - Cloud synchronization logic preserved
 
 #### Storage Strategy (Enhanced)
+
 - **IndexedDB** - Still primary offline storage
 - **Svelte Stores** - Added reactive state layer
 - **Cloud Sync** - Enhanced with better error handling
 
 #### PWA Capabilities (Improved)
+
 - **Service Worker** - Better caching strategies
 - **Offline Support** - Enhanced with SvelteKit features
 - **Installation** - Improved PWA manifest
@@ -219,11 +235,12 @@ npm run build        # Static site generation
 ### Future Architecture Considerations
 
 #### Database Evolution Path
+
 ```javascript
 // Phase 1: Current (IndexedDB + Stores)
 Svelte Components → Svelte Stores → IndexedDB
 
-// Phase 2: Add Cloud Sync (Supabase)  
+// Phase 2: Add Cloud Sync (Supabase)
 Svelte Components → Svelte Stores → IndexedDB + Supabase API
 
 // Phase 3: Advanced Features (Server-side if needed)
@@ -231,15 +248,18 @@ SvelteKit (SSR) → Database → Real-time subscriptions
 ```
 
 #### Deployment Flexibility
+
 Current static adapter allows deployment to:
+
 - **Netlify** - Serverless functions available
-- **Vercel** - Edge functions available  
+- **Vercel** - Edge functions available
 - **Cloudflare Pages** - Workers available
 - **Any CDN** - Pure static hosting
 
 If server features needed later, easy migration to:
+
 - `@sveltejs/adapter-vercel`
-- `@sveltejs/adapter-netlify`  
+- `@sveltejs/adapter-netlify`
 - `@sveltejs/adapter-node`
 
 ---

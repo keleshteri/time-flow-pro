@@ -1,6 +1,7 @@
 # Requirements
 
 ## Functional Requirements
+
 1. **FR1:** The system shall provide real-time timer functionality with start/stop capability accurate to the second
 2. **FR2:** The system shall allow manual time entry with date/time selection and automatic duration calculation
 3. **FR3:** The system shall categorize time entries (development, review, fix, meeting, research, other) with project association
@@ -16,6 +17,7 @@
 13. **FR13:** The system shall export data in CSV and JSON formats
 
 ## Non-Functional Requirements
+
 1. **NFR1:** Page load time must be under 3 seconds on 3G connection
 2. **NFR2:** Timer accuracy must be 99.9% over 8-hour periods
 3. **NFR3:** Sync operations must complete within 30 seconds

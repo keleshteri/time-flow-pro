@@ -3,11 +3,13 @@
 **Epic Goal:** Provide comprehensive business intelligence through interactive dashboards, detailed reports, and flexible data export capabilities. Users gain actionable insights into productivity patterns, revenue trends, and business performance to make informed decisions and create professional client reports.
 
 ## Story 5.1: Interactive Analytics Dashboard
+
 As a freelancer,
 I want a comprehensive analytics dashboard showing key business metrics,
 so that I can quickly understand my productivity patterns and business performance.
 
 **Acceptance Criteria:**
+
 1. Dashboard displaying daily, weekly, and monthly hour summaries
 2. Revenue metrics with current month vs. previous comparisons
 3. Active project status with progress indicators and deadlines
@@ -19,11 +21,13 @@ so that I can quickly understand my productivity patterns and business performan
 9. Real-time updates reflecting current timer and recent entries
 
 ## Story 5.2: Detailed Time & Project Reports
+
 As a freelancer,
 I want detailed reports showing time allocation and project analysis,
 so that I can optimize my work patterns and provide clients with professional summaries.
 
 **Acceptance Criteria:**
+
 1. Time breakdown reports by project, task type, and date ranges
 2. Project profitability analysis comparing time investment vs. revenue
 3. Task completion rates and estimated vs. actual time comparisons
@@ -35,11 +39,13 @@ so that I can optimize my work patterns and provide clients with professional su
 9. Report scheduling for automated weekly/monthly generation
 
 ## Story 5.3: Advanced Data Visualization & Charts
+
 As a freelancer,
 I want visual representations of my work data through charts and graphs,
 so that I can quickly identify trends and communicate insights effectively.
 
 **Acceptance Criteria:**
+
 1. Time allocation pie charts showing distribution across projects/tasks
 2. Revenue trend line graphs with month-over-month comparisons
 3. Productivity heat maps showing work patterns by day/hour
@@ -51,11 +57,13 @@ so that I can quickly identify trends and communicate insights effectively.
 9. Mobile-optimized chart display with touch interactions
 
 ## Story 5.4: Comprehensive Data Export & Integration
+
 As a freelancer,
 I want flexible data export capabilities,
 so that I can integrate with accounting software, backup my data, and share information with clients or accountants.
 
 **Acceptance Criteria:**
+
 1. CSV export with customizable column selection and date ranges
 2. JSON export for technical integrations and data portability
 3. PDF report generation for professional client deliverables
@@ -67,11 +75,13 @@ so that I can integrate with accounting software, backup my data, and share info
 9. API endpoint documentation for custom integrations
 
 ## Story 5.5: Business Intelligence & Forecasting
+
 As a freelancer,
 I want predictive analytics and business intelligence features,
 so that I can plan for growth and make data-driven business decisions.
 
 **Acceptance Criteria:**
+
 1. Revenue forecasting based on current project pipeline and historical data
 2. Capacity planning showing available hours vs. committed work
 3. Client lifecycle analysis identifying high-value relationships

@@ -58,6 +58,7 @@ src/
 ## Naming Conventions
 
 ### Files & Directories
+
 - **Components**: PascalCase (e.g., `Button.svelte`, `TimerWidget.svelte`)
 - **Pages**: lowercase with + prefix (e.g., `+page.svelte`, `+layout.svelte`)
 - **Stories**: Component name + `.stories.svelte` (e.g., `Button.stories.svelte`)
@@ -65,6 +66,7 @@ src/
 - **Utilities**: camelCase (e.g., `timeUtils.ts`, `apiClient.ts`)
 
 ### Code Conventions
+
 - **Variables**: camelCase
 - **Constants**: UPPER_SNAKE_CASE
 - **Types/Interfaces**: PascalCase
