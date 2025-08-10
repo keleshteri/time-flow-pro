@@ -22,9 +22,16 @@
  */
 
 import { writable, derived, get } from 'svelte/store';
-import type { Project, Task, TimeEntry } from '$lib/types/index.js';
+import type { Project, Task, TimeEntry, ProjectSummary, TaskSummary } from '$lib/types/index.js';
 import { eventBus } from '$lib/utils/eventBus.js';
 import { getCurrentTimestamp } from '$lib/utils/dateUtils.js';
+import {
+	generateProjectSummary,
+	generateTaskSummary,
+	calculateTotalHours,
+	calculateProjectProgress,
+	calculateTaskProgress
+} from '$lib/utils/progress-utils.js';
 
 // Project store state interface
 interface ProjectStoreState {
@@ -48,8 +55,58 @@ const initialState: ProjectStoreState = {
 	error: null
 };
 
-// Create the writable store
-const { subscribe, set, update } = writable<ProjectStoreState>(initialState);
+// Storage keys for localStorage persistence
+const STORAGE_KEYS = {
+	projects: 'timeflow-projects',
+	tasks: 'timeflow-tasks',
+	timeEntries: 'timeflow-time-entries',
+	selections: 'timeflow-selections'
+};
+
+// Load initial state from localStorage
+function loadFromStorage(): ProjectStoreState {
+	if (typeof window === 'undefined') return initialState;
+
+	try {
+		const projects = JSON.parse(localStorage.getItem(STORAGE_KEYS.projects) || '[]');
+		const tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.tasks) || '[]');
+		const timeEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.timeEntries) || '[]');
+		const selections = JSON.parse(localStorage.getItem(STORAGE_KEYS.selections) || '{}');
+
+		return {
+			...initialState,
+			projects,
+			tasks,
+			timeEntries,
+			selectedProjectId: selections.selectedProjectId || null,
+			selectedTaskId: selections.selectedTaskId || null
+		};
+	} catch (error) {
+		console.error('Failed to load project data from localStorage:', error);
+		return initialState;
+	}
+}
+
+// Save state to localStorage
+function saveToStorage(state: ProjectStoreState): void {
+	if (typeof window === 'undefined') return;
+
+	try {
+		localStorage.setItem(STORAGE_KEYS.projects, JSON.stringify(state.projects));
+		localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify(state.tasks));
+		localStorage.setItem(STORAGE_KEYS.timeEntries, JSON.stringify(state.timeEntries));
+		localStorage.setItem(STORAGE_KEYS.selections, JSON.stringify({
+			selectedProjectId: state.selectedProjectId,
+			selectedTaskId: state.selectedTaskId
+		}));
+	} catch (error) {
+		console.error('Failed to save project data to localStorage:', error);
+		eventBus.emit('storage:error', { error, timestamp: new Date() });
+	}
+}
+
+// Create the writable store with initial data from localStorage
+const { subscribe, set, update } = writable<ProjectStoreState>(loadFromStorage());
 
 /**
  * Generate a unique ID
@@ -72,11 +129,15 @@ function createProject(projectData: Omit<Project, 'id' | 'createdAt' | 'updatedA
 		updatedAt: now
 	};
 
-	update(state => ({
-		...state,
-		projects: [...state.projects, newProject],
-		error: null
-	}));
+	update(state => {
+		const newState = {
+			...state,
+			projects: [...state.projects, newProject],
+			error: null
+		};
+		saveToStorage(newState);
+		return newState;
+	});
 
 	// Emit event
 	eventBus.emit('project:created', {
@@ -115,11 +176,13 @@ function updateProject(projectId: string, updates: Partial<Omit<Project, 'id' | 
 			changes: updates
 		});
 
-		return {
+		const newState = {
 			...state,
 			projects: newProjects,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return updated;
@@ -153,7 +216,7 @@ function deleteProject(projectId: string): boolean {
 		// Emit event
 		eventBus.emit('project:deleted', { projectId });
 
-		return {
+		const newState = {
 			...state,
 			projects: newProjects,
 			tasks: newTasks,
@@ -162,6 +225,8 @@ function deleteProject(projectId: string): boolean {
 			selectedTaskId: newSelectedTaskId,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return deleted;
@@ -181,11 +246,15 @@ function createTask(taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>): str
 		updatedAt: now
 	};
 
-	update(state => ({
-		...state,
-		tasks: [...state.tasks, newTask],
-		error: null
-	}));
+	update(state => {
+		const newState = {
+			...state,
+			tasks: [...state.tasks, newTask],
+			error: null
+		};
+		saveToStorage(newState);
+		return newState;
+	});
 
 	// Emit event
 	eventBus.emit('task:created', {
@@ -233,11 +302,13 @@ function updateTask(taskId: string, updates: Partial<Omit<Task, 'id' | 'createdA
 			});
 		}
 
-		return {
+		const newState = {
 			...state,
 			tasks: newTasks,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return updated;
@@ -267,13 +338,15 @@ function deleteTask(taskId: string): boolean {
 		// Emit event
 		eventBus.emit('task:deleted', { taskId });
 
-		return {
+		const newState = {
 			...state,
 			tasks: newTasks,
 			timeEntries: newTimeEntries,
 			selectedTaskId: newSelectedTaskId,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return deleted;
@@ -293,11 +366,15 @@ function createTimeEntry(entryData: Omit<TimeEntry, 'id' | 'createdAt' | 'update
 		updatedAt: now
 	};
 
-	update(state => ({
-		...state,
-		timeEntries: [...state.timeEntries, newEntry],
-		error: null
-	}));
+	update(state => {
+		const newState = {
+			...state,
+			timeEntries: [...state.timeEntries, newEntry],
+			error: null
+		};
+		saveToStorage(newState);
+		return newState;
+	});
 
 	// Emit event
 	eventBus.emit('timeEntry:created', {
@@ -337,11 +414,13 @@ function updateTimeEntry(entryId: string, updates: Partial<Omit<TimeEntry, 'id' 
 			changes: updates
 		});
 
-		return {
+		const newState = {
 			...state,
 			timeEntries: newEntries,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return updated;
@@ -365,11 +444,13 @@ function deleteTimeEntry(entryId: string): boolean {
 		// Emit event
 		eventBus.emit('timeEntry:deleted', { entryId });
 
-		return {
+		const newState = {
 			...state,
 			timeEntries: newEntries,
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 
 	return deleted;
@@ -385,12 +466,14 @@ function selectProject(projectId: string | null): void {
 			eventBus.emit('project:selected', { projectId });
 		}
 
-		return {
+		const newState = {
 			...state,
 			selectedProjectId: projectId,
 			selectedTaskId: null, // Clear task selection when project changes
 			error: null
 		};
+		saveToStorage(newState);
+		return newState;
 	});
 }
 
@@ -398,11 +481,15 @@ function selectProject(projectId: string | null): void {
  * Select a task
  */
 function selectTask(taskId: string | null): void {
-	update(state => ({
-		...state,
-		selectedTaskId: taskId,
-		error: null
-	}));
+	update(state => {
+		const newState = {
+			...state,
+			selectedTaskId: taskId,
+			error: null
+		};
+		saveToStorage(newState);
+		return newState;
+	});
 }
 
 /**
@@ -471,9 +558,81 @@ export const projectsWithTasks = derived(
 
 export const selectedProjectTasks = derived(
 	{ subscribe },
-	state => state.selectedProjectId 
+	state => state.selectedProjectId
 		? state.tasks.filter(t => t.projectId === state.selectedProjectId)
 		: []
+);
+
+// Derived stores for progress tracking and summaries
+export const projectSummaries = derived(
+	{ subscribe },
+	state => state.projects.map(project =>
+		generateProjectSummary(project, state.tasks, state.timeEntries)
+	)
+);
+
+export const taskSummaries = derived(
+	{ subscribe },
+	state => state.tasks.map(task => {
+		const project = state.projects.find(p => p.id === task.projectId);
+		return generateTaskSummary(task, state.timeEntries, project);
+	})
+);
+
+export const activeProjects = derived(
+	{ subscribe },
+	state => state.projects.filter(p => p.status === 'active' && !p.isArchived)
+);
+
+export const completedProjects = derived(
+	{ subscribe },
+	state => state.projects.filter(p => p.status === 'completed')
+);
+
+export const overdueTasks = derived(
+	{ subscribe },
+	state => state.tasks.filter(task => {
+		if (!task.dueDate || task.status === 'completed' || task.status === 'cancelled') {
+			return false;
+		}
+		const dueDate = new Date(task.dueDate);
+		const now = new Date();
+		return now > dueDate;
+	})
+);
+
+export const activeTasks = derived(
+	{ subscribe },
+	state => state.tasks.filter(t => t.status === 'in-progress' || t.status === 'pending')
+);
+
+export const projectProgress = derived(
+	{ subscribe },
+	state => {
+		const progressMap = new Map<string, number>();
+		state.projects.forEach(project => {
+			const progress = calculateProjectProgress(project, state.tasks, state.timeEntries);
+			progressMap.set(project.id, progress);
+		});
+		return progressMap;
+	}
+);
+
+export const taskProgress = derived(
+	{ subscribe },
+	state => {
+		const progressMap = new Map<string, number>();
+		state.tasks.forEach(task => {
+			const progress = calculateTaskProgress(task, state.timeEntries);
+			progressMap.set(task.id, progress);
+		});
+		return progressMap;
+	}
+);
+
+export const timeEntries = derived(
+	{ subscribe },
+	state => state.timeEntries
 );
 
 // Export the store with methods
@@ -498,10 +657,4 @@ export const projectStore = {
 	setError
 };
 
-// Export derived stores
-export {
-	selectedProject,
-	selectedTask,
-	projectsWithTasks,
-	selectedProjectTasks
-};
+// All derived stores are already exported individually above
