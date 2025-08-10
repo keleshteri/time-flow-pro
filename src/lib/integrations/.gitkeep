@@ -1,0 +1,7 @@
+# External integrations directory
+# This directory will contain:
+# - asana/ - Asana API integration
+# - export/ - Data export integrations
+# - sync/ - Data synchronization services
+# - webhooks/ - Webhook handlers
+# - api/ - External API clients

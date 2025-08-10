@@ -1,0 +1,7 @@
+# Core business logic and utilities
+# This directory will contain:
+# - constants.ts - Application constants
+# - config.ts - Configuration management
+# - validators.ts - Data validation utilities
+# - formatters.ts - Data formatting utilities
+# - calculations.ts - Business logic calculations
