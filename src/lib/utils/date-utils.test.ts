@@ -5,7 +5,8 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { formatDuration, calculateDuration, isValidEmail } from './test-helpers';
+import { formatDuration, calculateDuration, formatDate, formatTime, addDays, isToday } from './dateUtils';
+import { isValidEmail } from './validationUtils';
 
 describe('Date Utilities', () => {
 	describe('formatDuration', () => {
@@ -41,6 +42,48 @@ describe('Date Utilities', () => {
 			const end = new Date('2024-01-01T10:00:00Z');
 
 			expect(calculateDuration(start, end)).toBe(-2);
+		});
+	});
+
+	describe('formatDate', () => {
+		it('should format date to YYYY-MM-DD', () => {
+			const date = new Date('2024-01-15T10:30:00Z');
+			expect(formatDate(date)).toBe('2024-01-15');
+		});
+	});
+
+	describe('formatTime', () => {
+		it('should format time in 24-hour format', () => {
+			const date = new Date('2024-01-15T14:30:00Z');
+			const formatted = formatTime(date, true);
+			// Time formatting depends on system timezone, so just check format
+			expect(formatted).toMatch(/\d{2}:\d{2}/);
+		});
+	});
+
+	describe('addDays', () => {
+		it('should add days to a date', () => {
+			const date = new Date('2024-01-15');
+			const result = addDays(date, 5);
+			expect(formatDate(result)).toBe('2024-01-20');
+		});
+
+		it('should subtract days with negative input', () => {
+			const date = new Date('2024-01-15');
+			const result = addDays(date, -5);
+			expect(formatDate(result)).toBe('2024-01-10');
+		});
+	});
+
+	describe('isToday', () => {
+		it('should return true for today\'s date', () => {
+			const today = new Date();
+			expect(isToday(today)).toBe(true);
+		});
+
+		it('should return false for yesterday', () => {
+			const yesterday = addDays(new Date(), -1);
+			expect(isToday(yesterday)).toBe(false);
 		});
 	});
 });

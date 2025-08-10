@@ -14,11 +14,15 @@ export * from './components/ui/index.js';
 // Type definitions
 export * from './types/index.js';
 
-// Core utilities (when available)
-// export * from './core/index.js';
+// Core utilities
+export * from './utils/dateUtils.js';
+export * from './utils/validationUtils.js';
+export * from './utils/eventBus.js';
+
+// Stores
+export * from './stores/timerStore.js';
+export * from './stores/projectStore.js';
+export * from './stores/settingsStore.js';
 
 // Services (when available)
 // export * from './services/index.js';
-
-// Stores (when available)
-// export * from './stores/index.js';

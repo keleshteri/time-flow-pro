@@ -110,31 +110,9 @@ export function wait(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/**
- * Format duration for display (HH:MM:SS)
- */
-export function formatDuration(seconds: number): string {
-	const hours = Math.floor(seconds / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	const secs = seconds % 60;
-
-	return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-/**
- * Calculate duration between two dates in hours
- */
-export function calculateDuration(startTime: Date, endTime: Date): number {
-	return (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
-}
-
-/**
- * Validate email format
- */
-export function isValidEmail(email: string): boolean {
-	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	return emailRegex.test(email);
-}
+// Re-export utility functions from dedicated modules for testing convenience
+export { formatDuration, calculateDuration } from './dateUtils.js';
+export { isValidEmail } from './validationUtils.js';
 
 /**
  * Generate a random UUID for testing
