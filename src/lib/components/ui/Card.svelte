@@ -146,25 +146,25 @@
 </div>
 
 <style>
-	/* Dark mode styles */
+	/* Dark mode styles - using CSS custom properties instead of @apply */
 	:global(.dark) .bg-white {
-		@apply bg-gray-800;
+		background-color: #1f2937;
 	}
 
 	:global(.dark) .bg-gray-50 {
-		@apply bg-gray-700;
+		background-color: #374151;
 	}
 
 	:global(.dark) .border-gray-200 {
-		@apply border-gray-600;
+		border-color: #4b5563;
 	}
 
 	:global(.dark) .border-gray-300 {
-		@apply border-gray-500;
+		border-color: #6b7280;
 	}
 
 	:global(.dark) .border-gray-100 {
-		@apply border-gray-700;
+		border-color: #374151;
 	}
 	
 	/* High contrast mode support */

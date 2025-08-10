@@ -261,35 +261,36 @@
 {/if}
 
 <style>
-	/* Dark mode styles */
+	/* Dark mode styles - using CSS custom properties instead of @apply */
 	:global(.dark) .bg-white {
-		@apply bg-gray-800 text-white;
+		background-color: #1f2937;
+		color: white;
 	}
 
 	:global(.dark) .bg-gray-50 {
-		@apply bg-gray-700;
+		background-color: #374151;
 	}
 
 	:global(.dark) .text-gray-900 {
-		@apply text-white;
+		color: white;
 	}
 
 	:global(.dark) .text-gray-400 {
-		@apply text-gray-300;
+		color: #d1d5db;
 	}
 
 	:global(.dark) .hover\:text-gray-500:hover {
-		@apply text-gray-200;
+		color: #e5e7eb;
 	}
 	
 	/* High contrast mode support */
 	@media (prefers-contrast: high) {
 		.bg-gray-500 {
-			@apply bg-black;
+			background-color: black;
 		}
-		
+
 		.bg-opacity-75 {
-			@apply bg-opacity-90;
+			background-color: rgba(0, 0, 0, 0.9);
 		}
 	}
 	

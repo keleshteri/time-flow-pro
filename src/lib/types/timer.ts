@@ -5,26 +5,36 @@
  * - Timer state management
  * - Timer sessions
  * - Timer configuration
+ * - Timer display options
+ * - Timer persistence
  */
 
+export type TimerStatus = 'stopped' | 'running' | 'paused';
+
 export interface TimerState {
-	/** Whether the timer is currently running */
-	isRunning: boolean;
+	/** Current timer status */
+	status: TimerStatus;
 
 	/** When the timer was started (null if not running) */
 	startTime: Date | null;
 
+	/** When the timer was stopped (null if not stopped) */
+	endTime: Date | null;
+
+	/** When the timer was paused (null if not paused) */
+	pausedTime: Date | null;
+
 	/** Elapsed time in seconds */
-	elapsed: number;
+	elapsedTime: number;
 
 	/** Currently selected project ID */
-	currentProject: string | null;
+	projectId: string | null;
 
 	/** Currently selected task ID */
-	currentTask: string | null;
+	taskId: string | null;
 
 	/** Timer session description */
-	description?: string;
+	description: string;
 }
 
 export interface TimerSession {
@@ -82,8 +92,6 @@ export interface TimerConfig {
 	autoStart: boolean;
 }
 
-export type TimerStatus = 'stopped' | 'running' | 'paused';
-
 export interface TimerDisplayOptions {
 	/** Format for time display (HH:MM:SS, HH:MM, etc.) */
 	format: 'HH:MM:SS' | 'HH:MM' | 'decimal';
@@ -96,4 +104,50 @@ export interface TimerDisplayOptions {
 
 	/** Color scheme for timer display */
 	colorScheme: 'default' | 'minimal' | 'colorful';
+}
+
+export interface TimerPersistenceState {
+	/** Timer state data */
+	state: TimerState;
+
+	/** When the state was last saved */
+	lastSaved: Date;
+
+	/** Session recovery data */
+	recovery: {
+		/** Browser session ID */
+		sessionId: string;
+
+		/** Last known accurate time */
+		lastAccurateTime: Date;
+
+		/** Performance timestamp for accuracy validation */
+		performanceTimestamp: number;
+	};
+}
+
+export interface TimerAccuracyMetrics {
+	/** Expected elapsed time based on start time */
+	expectedElapsed: number;
+
+	/** Actual elapsed time from timer */
+	actualElapsed: number;
+
+	/** Drift in seconds (positive = timer is ahead) */
+	drift: number;
+
+	/** Whether drift is within acceptable range */
+	isAccurate: boolean;
+
+	/** Last accuracy check timestamp */
+	lastCheck: Date;
+}
+
+export interface TimerEvents {
+	'timer:start': { projectId?: string; taskId?: string; timestamp: Date };
+	'timer:stop': { duration: number; timestamp: Date };
+	'timer:pause': { timestamp: Date };
+	'timer:resume': { timestamp: Date };
+	'timer:reset': { timestamp: Date };
+	'timer:accuracy-warning': { drift: number; timestamp: Date };
 }

@@ -11,6 +11,9 @@
 // UI Components
 export * from './components/ui/index.js';
 
+// Timer Components
+export * from './components/timer/index.js';
+
 // Type definitions
 export * from './types/index.js';
 
@@ -18,11 +21,12 @@ export * from './types/index.js';
 export * from './utils/dateUtils.js';
 export * from './utils/validationUtils.js';
 export * from './utils/eventBus.js';
+export * from './utils/time-utils.js';
 
 // Stores
 export * from './stores/timerStore.js';
 export * from './stores/projectStore.js';
 export * from './stores/settingsStore.js';
 
-// Services (when available)
-// export * from './services/index.js';
+// Services
+export { timerService } from './services/timer-service.js';
