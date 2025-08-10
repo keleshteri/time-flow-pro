@@ -2,6 +2,7 @@
 	"name": "time-flow-pro",
 	"private": true,
 	"version": "0.0.1",
+	"description": "Professional time tracking and billing management system",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -54,5 +55,21 @@
 		"vite": "^7.0.4",
 		"vitest": "^3.2.3",
 		"vitest-browser-svelte": "^0.1.0"
+	},
+	"dependencies": {
+		"date-fns": "^4.1.0",
+		"uuid": "^11.1.0"
+	},
+	"lint-staged": {
+		"*.{js,ts,svelte}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,md,css,html}": [
+			"prettier --write"
+		]
+	},
+	"engines": {
+		"node": ">=18.0.0"
 	}
 }
