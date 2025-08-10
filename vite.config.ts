@@ -47,7 +47,8 @@ export default defineConfig({
 
 	// Dependency optimization
 	optimizeDeps: {
-		include: ['date-fns', 'uuid']
+		include: ['date-fns', 'uuid'],
+		exclude: ['svelte/clsx']
 	},
 
 	// Vitest configuration for comprehensive testing

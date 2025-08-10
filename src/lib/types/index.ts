@@ -39,6 +39,34 @@ export type {
 	BulkTimeEntryOperation
 } from './time-entry.js';
 
+// Component types
+export type {
+	BaseComponentProps,
+	ButtonProps,
+	ButtonVariant,
+	ButtonSize,
+	ButtonType,
+	InputProps,
+	InputType,
+	InputSize,
+	InputVariant,
+	ModalProps,
+	ModalSize,
+	CardProps,
+	CardVariant,
+	CardPadding,
+	ValidationRule,
+	FormFieldState,
+	ThemeColors,
+	ComponentTheme,
+	AccessibilityProps,
+	AnimationProps,
+	ResponsiveProps,
+	ComponentEventHandlers,
+	LoadingProps,
+	IconProps
+} from './components.js';
+
 // Common utility types
 export interface ApiResponse<T = unknown> {
 	success: boolean;
